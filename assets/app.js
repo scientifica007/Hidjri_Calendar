@@ -165,8 +165,10 @@ function exportICS(){
  const now=new Date().toISOString().replace(/[-:]/g,'').replace('.000','');
  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//MIQAT//Arabic Hijri Calendar//AR','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:مِيقات'];
  for(const o of occ){
-  const e=o.event,stamp=icsDate(o.date,e.time),end=icsDate(o.date,e.time?plusTime(e.time):'10:00');
-  lines.push('BEGIN:VEVENT','UID:'+e.id+'-'+o.date+'@miqat.local','DTSTAMP:'+now,'DTSTART:'+stamp,'DTEND:'+end,'SUMMARY:'+icsEscape(e.title),'DESCRIPTION:'+icsEscape(e.notes||'')+(e.anchor==='hijri'?'\\nمرتبط بتاريخ هجري تقديري أو موثق عند التصدير':''),'STATUS:'+(o.done?'COMPLETED':'CONFIRMED'));
+  const e=o.event,stamp=e.time?icsDate(o.date,e.time):null;
+  const endsNextDay=e.time&&Number(e.time.slice(0,2))===23;
+  const end=e.time?icsDate(endsNextDay?plusDays(o.date,1):o.date,plusTime(e.time)):null;
+  lines.push('BEGIN:VEVENT','UID:'+e.id+'-'+o.date+'@miqat.local','DTSTAMP:'+now,e.time?'DTSTART:'+stamp:'DTSTART;VALUE=DATE:'+o.date.replaceAll('-',''),e.time?'DTEND:'+end:'DTEND;VALUE=DATE:'+plusDays(o.date,1).replaceAll('-',''),'SUMMARY:'+icsEscape(e.title),'DESCRIPTION:'+icsEscape(e.notes||'')+(e.anchor==='hijri'?'\\nمرتبط بتاريخ هجري تقديري أو موثق عند التصدير':''),'STATUS:'+(o.done?'COMPLETED':'CONFIRMED'));
   if(e.time&&Number(e.remind)>=0)lines.push('BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEscape(e.title),'TRIGGER:-PT'+e.remind+'M','END:VALARM');
   lines.push('END:VEVENT');
  }
@@ -185,7 +187,7 @@ function checkReminders(){
  const doneKey='miqat:notifications:v1';let notified={};try{notified=JSON.parse(localStorage.getItem(doneKey)||'{}')||{};}catch{}
  for(const o of expandEvents(state.events,start,end,country(),records())){
   const e=o.event;if(o.done||!e.time||Number(e.remind)<0)continue;
-  const ms=new Date(o.date+'T'+e.time+':00').getTime()-Number(e.remind)*60000;
+  const ms=new Date(o.date+'T'+e.time+':00+01:00').getTime()-Number(e.remind)*60000;
   if(!Number.isFinite(ms)||nowMs<ms||nowMs-ms>70000||notified[o.key])continue;
   try{new Notification('مِيقَات | '+e.title,{body:'موعدك: '+niceGregorian(o.date)+' · '+e.time,tag:o.key});notified[o.key]=Date.now();}catch{}
  }

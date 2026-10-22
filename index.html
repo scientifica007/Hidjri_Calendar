@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111b32"><meta name="description" content="مِيقَات: تقويم هجري عربي ومخطط للمهام مع متابعة موثقة لمطالع الأهلة.">
+<title>مِيقَات | تقويمك الهجري ومواعيدك</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="assets/style.css">
+<script type="module" src="assets/app.js"></script>
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+ <div class="brand"><div class="brand-icon">☾</div><div><strong>مِيقَات</strong><small>التقويم الهجري الذكي</small></div></div>
+ <div class="sidebar-label">مساحة العمل</div>
+ <nav class="nav" aria-label="الأقسام">
+  <button class="nav-item active" data-view="calendar" aria-current="page"><span>▦</span> التقويم</button>
+  <button class="nav-item" data-view="agenda"><span>☷</span> جدول الأعمال</button>
+  <button class="nav-item" data-view="sources"><span>◉</span> رصد الأهلة والمصادر</button>
+  <button class="nav-item" data-view="settings"><span>⚙</span> الإعدادات والبيانات</button>
+ </nav>
+ <div class="sidebar-label second">موعدك القادم</div>
+ <div id="sidebar-next" class="sidebar-next">لم تُضف أي مواعيد بعد.</div>
+ <div class="sidebar-spacer"></div>
+ <div class="sidebar-foot"><span class="status-dot"></span><span>بياناتك محفوظة في هذا المتصفح</span></div>
+ <a class="apphub-link" href="https://scientifica007.github.io/AppHub/" rel="noopener">↗ العودة إلى AppHub</a>
+</aside>
+<div class="main-wrap">
+ <header class="topbar">
+  <button class="mobile-menu icon-btn" id="menu" aria-label="فتح القائمة">☰</button>
+  <div class="crumb"><span>مساحة العمل</span><b>/</b><strong id="view-label">التقويم</strong></div>
+  <div class="top-actions"><span id="live-clock" class="live-clock"></span><button type="button" id="theme-switch" class="icon-btn" title="تبديل المظهر" aria-label="تبديل المظهر">◐</button><button type="button" id="go-today-top" class="small-btn">اليوم</button></div>
+ </header>
+ <main class="main-content">
+ <section class="view" id="view-calendar">
+  <div class="hero">
+   <div class="hero-copy">
+    <span class="eyebrow"><span class="eyebrow-dot"></span> تقويم يضع الزمن الهجري في المركز</span>
+    <h1>كل يومٍ له <em>ميعاد</em></h1>
+    <p>خطّط لأعمالك ومواعيدك بالتاريخ الهجري، واحتفظ بالميلادي مرجعًا واضحًا. البداية الرسمية للشهر تظهر ببيّنتها، لا بالتخمين.</p>
+    <div class="hero-metrics"><div><span id="hero-hijri">—</span><small>التاريخ الهجري اليوم</small></div><div><span id="hero-gregorian">—</span><small>الموافق ميلاديًا</small></div></div>
+   </div>
+   <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="moon"></div><div class="star s1">✦</div><div class="star s2">✧</div><div class="star s3">✦</div><div class="art-label">الوقت أمانة<br><b>فأحسن تدبيره</b></div></div>
+  </div>
+  <div class="section-head"><div><div class="overline">روزنامتك الشخصية</div><h2>التقويم الشهري</h2></div><button class="primary-btn" id="new-event">＋ إضافة موعد</button></div>
+  <div class="workspace-grid">
+   <section class="calendar-card">
+    <div class="calendar-top"><div class="calendar-heading"><span class="small-overline">شهر هجري</span><h3 id="month-title">—</h3><p id="month-subtitle">—</p></div><div class="calendar-controls"><button class="icon-btn" id="prev-month" aria-label="الشهر السابق">→</button><button class="small-btn" id="go-today">هذا الشهر</button><button class="icon-btn" id="next-month" aria-label="الشهر التالي">←</button></div></div>
+    <div id="month-status" class="month-status"></div>
+    <div class="weekdays" id="weekdays"></div><div class="days-grid" id="days-grid" aria-label="أيام الشهر"></div>
+    <div class="calendar-bottom"><span><i class="legend-dot scheduled"></i> موعد مسجل</span><span><i class="legend-dot today"></i> اليوم</span><span class="data-note">الهجري هو المرجع الأساسي للعرض</span></div>
+   </section>
+   <aside class="day-panel">
+    <div class="day-heading"><span class="small-overline">تفاصيل اليوم المحدد</span><h3 id="selected-hijri">—</h3><p id="selected-gregorian">—</p><div id="selected-status"></div></div>
+    <div class="day-panel-tools"><strong>برنامج اليوم</strong><button class="text-btn" id="add-to-day">＋ إضافة</button></div>
+    <div id="day-events" class="day-events"></div>
+    <div class="day-tip"><span>✧</span><p>المهام المرتبطة بيوم هجري تتحرك تلقائيًا عند تغيير بداية الشهر في إعدادات الرصد.</p></div>
+   </aside>
+  </div>
+  <section class="below-grid"><div class="info-tile"><div class="tile-icon">◉</div><div><b>بداية الشهر ليست مجرد عملية حسابية</b><p>المواعيد الشرعية مرتبطة بالإعلان المعتمد في بلدك، بينما التواريخ القادمة تقديرية حتى تثبت بدايتها.</p></div><button class="text-btn" data-view="sources">مصادر الرصد ←</button></div><div class="info-tile"><div class="tile-icon">◷</div><div><b>لا تنسَ موعدًا مهمًا</b><p>استعمل تنبيهات المتصفح أثناء فتح التطبيق، أو صدّر المواعيد إلى تقويم هاتفك.</p></div><button class="text-btn" data-view="settings">إدارة التنبيهات ←</button></div></section>
+ </section>
+ <section class="view" id="view-agenda" hidden>
+  <div class="page-title"><span class="overline">التخطيط والتنفيذ</span><h1>جدول الأعمال</h1><p>جميع المهام والمواعيد، سواءً أدخلتها بالتاريخ الهجري أو الميلادي.</p></div>
+  <div class="panel"><div class="toolbar"><div class="toolbar-title"><h2>المواعيد المسجلة</h2><span id="agenda-count"></span></div><div class="toolbar-buttons"><select id="agenda-filter" aria-label="تصفية المواعيد"><option value="all">كل المواعيد</option><option value="open">غير المنجزة</option><option value="done">المنجزة</option></select><button class="primary-btn" id="agenda-new">＋ موعد جديد</button></div></div><div id="agenda-list" class="agenda-list"></div></div>
+ </section>
+ <section class="view" id="view-sources" hidden>
+  <div class="page-title"><span class="overline">توثيق الرؤية والتقويم</span><h1>مطالع الأهلة</h1><p>مصادر موثوقة، وتمييز واضح بين الإعلان الرسمي والتقدير الحسابي وتقارير الرصد. لا يحل أحدها محل الآخر.</p></div>
+  <div class="sources-banner"><span class="source-emblem">☾</span><div><strong>الجزائر هي المرجع الافتراضي</strong><p>لا نعتمد بداية شهر في الجزائر تلقائيًا اعتمادًا على رؤية أو تقويم دولة أخرى. وتحتاج أخبار الرصد إلى مراجعة مصدرها قبل إدخالها كتاريخ معتمد.</p></div></div>
+  <div class="section-head"><h2>المصادر المرجعية</h2><button class="small-btn" id="refresh-headlines">تحديث الأخبار المنشورة ↻</button></div>
+  <div id="source-cards" class="source-cards"></div>
+  <div class="panel reports-panel"><div class="toolbar"><div><h2>آخر ما التقطه راصد الأخبار</h2><p class="minor">عناوين وروابط للاستطلاع فقط؛ ليست إعلانات بداية شهر معتمدة.</p></div><small id="feed-updated"></small></div><div id="headline-list" class="headline-list"></div></div>
+  <div class="panel corrections-panel"><div class="toolbar"><div><h2>سجل البدايات الموثقة</h2><p class="minor">تعديلاتك المحلية محفوظة في متصفحك، وتسبق التقديرات الحسابية.</p></div><button class="primary-btn" id="add-observation">＋ توثيق بداية شهر</button></div><div id="observation-list"></div></div>
+ </section>
+ <section class="view" id="view-settings" hidden>
+  <div class="page-title"><span class="overline">تحكم في تجربتك</span><h1>الإعدادات والبيانات</h1><p>إعدادات التقويم والتنبيهات، مع إمكانية نسخ بياناتك احتياطيًا.</p></div>
+  <div class="settings-grid">
+   <section class="panel settings-panel"><h2>مرجع التقويم</h2><label for="country">بلد اعتماد بدايات الأشهر</label><select id="country"><option value="DZ">الجزائر</option><option value="SA">السعودية</option><option value="MA">المغرب</option><option value="TN">تونس</option><option value="OTHER">بلد آخر (تقدير حسابي)</option></select><p class="minor">يظهر الشهر مؤكَّدًا فقط عندما توجد له بداية موثّقة تخص البلد المختار. بخلاف ذلك يُعرض تاريخ تقديري.</p><label class="checkbox-line"><input id="gregorian-secondary" type="checkbox" checked> إظهار التاريخ الميلادي داخل خانات التقويم</label><label class="checkbox-line"><input id="weekend-highlight" type="checkbox" checked> تمييز الجمعة والسبت</label></section>
+   <section class="panel settings-panel"><h2>التنبيهات</h2><p class="minor">يمكن للتطبيق عرض تنبيه عند اقتراب الموعد طالما أنه مفتوح. لا تضمن الاستضافة الثابتة تنبيهات عند إغلاقه.</p><button class="secondary-btn" id="ask-notifications">تفعيل إذن تنبيهات المتصفح</button><div id="notification-state" class="setting-feedback"></div><button class="secondary-btn" id="export-ics">تصدير المواعيد إلى التقويم ‎(.ics)</button><p class="minor">ملف iCalendar يصدر المواعيد الحالية مع التذكير؛ المواعيد الهجرية المستقبلية المكررة تُثبت وفق التواريخ المحسوبة وقت التصدير.</p></section>
+   <section class="panel settings-panel"><h2>النسخ الاحتياطي</h2><p class="minor">تبقى البيانات محليًا ولا تنتقل تلقائيًا بين الأجهزة. صدّر نسخة JSON بانتظام.</p><div class="setting-actions"><button class="primary-btn" id="export-json">تنزيل نسخة JSON</button><button class="secondary-btn" id="import-json">استيراد نسخة</button><input id="import-file" type="file" accept=".json,application/json" hidden></div><div id="storage-status" class="setting-feedback"></div></section>
+   <section class="panel settings-panel"><h2>عن دقة التقويم</h2><p>القاعدة الحسابية الأولية: <b>تقويم أم القرى عبر محرّك المتصفح</b>، ولا تُعرض على أنها إعلان جزائري رسمي. تبدأ الأيام في الواجهة عند منتصف الليل لأغراض التنظيم المدني.</p><p class="minor">قد يتغير التاريخ الهجري الفعلي بعد إعلان رؤية الهلال مساءً؛ راجع الإعلان الرسمي عند توثيق الأشهر المهمة.</p><button class="text-btn" data-view="sources">الانتقال إلى المصادر ←</button></section>
+  </div>
+ </section>
+ <footer class="footer"><span>مِيقَات — التخطيط يبدأ بمعرفة الوقت</span><span>نسخة أولى · يعمل محليًا على جهازك · <a href="https://github.com/scientifica007/Hidjri_Calendar" target="_blank" rel="noopener">الشيفرة المصدرية</a></span></footer>
+ </main>
+ </div>
+</div>
+<div class="overlay" id="overlay" hidden></div>
+<dialog class="dialog" id="event-dialog"><form id="event-form"><div class="dialog-head"><div><span class="overline">التخطيط للمستقبل</span><h2 id="event-dialog-title">موعد جديد</h2></div><button type="button" class="icon-btn close-dialog" aria-label="إغلاق">×</button></div>
+ <input type="hidden" id="event-id"><label for="event-title">عنوان الموعد *</label><input id="event-title" maxlength="140" required placeholder="مثل: اجتماع، مهمة، مراجعة…">
+ <div class="two-fields"><label>تصنيف الموعد<select id="event-type"><option value="task">مهمة</option><option value="meeting">اجتماع</option><option value="personal">شخصي</option><option value="religious">مناسبة</option></select></label><label>أولوية الموعد<select id="event-priority"><option value="normal">عادية</option><option value="high">مرتفعة</option></select></label></div>
+ <label for="date-system">نظام ربط الموعد</label><select id="date-system"><option value="hijri">بالتاريخ الهجري (يتحرك بتغير بداية الشهر)</option><option value="gregorian">بالتاريخ الميلادي (تاريخ ثابت)</option></select>
+ <div id="hijri-fields" class="three-fields"><label>اليوم<input id="hday" type="number" min="1" max="30"></label><label>الشهر<select id="hmonth"></select></label><label>السنة<input id="hyear" type="number" min="1300" max="1700"></label></div>
+ <div id="gregorian-fields" hidden><label>التاريخ الميلادي<input id="gdate" type="date"></label></div>
+ <div class="two-fields"><label>التوقيت (اختياري)<input id="event-time" type="time"></label><label>التذكير<select id="event-remind"><option value="-1">دون تذكير</option><option value="0">وقت الموعد</option><option value="15">قبل 15 دقيقة</option><option value="60">قبل ساعة</option><option value="1440">قبل يوم</option></select></label></div>
+ <label>التكرار<select id="event-repeat"><option value="none">دون تكرار</option><option value="hijri-year">سنوي هجري</option><option value="hijri-month">شهري هجري</option><option value="gregorian-year">سنوي ميلادي</option></select></label>
+ <label>ملاحظات<textarea id="event-notes" rows="3" maxlength="1000" placeholder="تفاصيل أو خطوات تنفيذ..."></textarea></label>
+ <div class="form-feedback" id="event-error" role="alert"></div>
+ <div class="dialog-footer"><button type="button" class="secondary-btn close-dialog">إلغاء</button><button type="submit" class="primary-btn">حفظ الموعد</button></div>
+ </form></dialog>
+<dialog class="dialog" id="observation-dialog"><form id="observation-form"><div class="dialog-head"><div><span class="overline">بداية شهر بوثيقة</span><h2>توثيق غرة شهر</h2></div><button type="button" class="icon-btn close-dialog" aria-label="إغلاق">×</button></div>
+ <p class="minor">لا تُدخل تاريخًا على أنه رسمي إلا بعد التأكد من إعلان الجهة المختصة. التعديل سيؤثر في جميع المواعيد الهجرية المتعلقة بالشهر.</p>
+ <div class="two-fields"><label>الدولة<select id="ob-country"><option value="DZ">الجزائر</option><option value="SA">السعودية</option><option value="MA">المغرب</option><option value="TN">تونس</option><option value="OTHER">بلد آخر</option></select></label><label>السنة الهجرية<input id="ob-year" type="number" min="1300" max="1700" required></label></div>
+ <label>الشهر الهجري<select id="ob-month"></select></label><label>التاريخ الميلادي لليوم الأول<input id="ob-date" type="date" required></label><label>الجهة المعلنة<input id="ob-authority" required maxlength="160" placeholder="وزارة الشؤون الدينية والأوقاف"></label><label>رابط البيان أو الخبر الموثِّق<input id="ob-url" type="url" required placeholder="https://..."></label>
+ <div class="form-feedback" id="ob-error" role="alert"></div><div class="dialog-footer"><button type="button" class="secondary-btn close-dialog">إلغاء</button><button type="submit" class="primary-btn">حفظ التوثيق</button></div>
+ </form></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body></html>

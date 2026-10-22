@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "notes": "تسجيلات مرجعية فردية فقط. التقويم الحسابي المرجعي لا يثبت الرؤية الرسمية. status reported يعني أن صفحة موثوقة نقلت البداية ولا يُعد بديلا عن البيان الوطني الأصلي.",
+  "records": [
+    {
+      "country": "DZ",
+      "year": 1448,
+      "month": 1,
+      "date": "2026-06-16",
+      "authority": "وزارة الشؤون الدينية والأوقاف الجزائرية، وفق الخبر المنشور بالإذاعة الجزائرية بتاريخ 15/06/2026",
+      "quality": "reported",
+      "url": "https://news.radioalgerie.dz/ar/node/88359"
+    },
+    {
+      "country": "DZ",
+      "year": 1448,
+      "month": 5,
+      "date": "2026-10-12",
+      "authority": "مركز الفلك الدولي: قائمة بدايات الأشهر المعلنة لدى الدول، ومنها الجزائر؛ تحقق من بيان الوزارة",
+      "quality": "reported",
+      "url": "https://astronomycenter.net/icop/jua48.html"
+    },
+    {
+      "country": "SA",
+      "year": 1448,
+      "month": 1,
+      "date": "2026-06-16",
+      "authority": "المحكمة العليا السعودية، بيان منشور في وكالة الأنباء السعودية",
+      "quality": "reported",
+      "url": "https://spa.gov.sa/N2613175"
+    },
+    {
+      "country": "SA",
+      "year": 1448,
+      "month": 5,
+      "date": "2026-10-12",
+      "authority": "مركز الفلك الدولي: قائمة بدايات الشهر لدى الدول",
+      "quality": "reported",
+      "url": "https://astronomycenter.net/icop/jua48.html"
+    },
+    {
+      "country": "TN",
+      "year": 1448,
+      "month": 5,
+      "date": "2026-10-12",
+      "authority": "مركز الفلك الدولي: قائمة بدايات الشهر لدى الدول",
+      "quality": "reported",
+      "url": "https://astronomycenter.net/icop/jua48.html"
+    },
+    {
+      "country": "MA",
+      "year": 1448,
+      "month": 5,
+      "date": "2026-10-13",
+      "authority": "مركز الفلك الدولي: قائمة بدايات الشهر لدى الدول",
+      "quality": "reported",
+      "url": "https://astronomycenter.net/icop/jua48.html"
+    }
+  ]
+}
